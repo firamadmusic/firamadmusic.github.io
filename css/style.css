@@ -93,7 +93,7 @@
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 /* Base size - 16px browser default */
 :root {
-  font-size:16px;           /* Using a 1.25 modular scale for typography */
+  font-size:12px;           /* Using a 1.25 modular scale for typography */
   --scale-0:1rem;           /* 16px */
   --scale-1:1.25rem;        /* 20px */
   --scale-2:1.563rem;       /* 25px */
