@@ -17,8 +17,46 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  flex-wrap: wrap;
+  flex-wrap: wrap;}
+  .works {
+  margin-top: 3rem;
 }
+
+.works h2 {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+.works-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.works-links li {
+  margin-bottom: 0.5rem;
+}
+
+.works-links a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.works-links a:hover {
+  opacity: 0.6;
+}
+
+  .section-title {
+  margin: 0 0 1rem;
+  letter-spacing: 0.15em;
+  font-size: 1rem;
+  font-family: serif;
+  font-weight: 400;
+  line-height: 1.5rem;
+}
+  
 </style>
 </head>
 <body>
@@ -30,6 +68,19 @@
   <li><span class="wiggle"><a href="https://open.spotify.com/user/cobek70" target="_blank" rel="noopener noreferrer">Playlist</a></span></li>
   <li><span class="wiggle"><a href="https://instagram.com/futuregarage_" target="_blank" rel="noopener noreferrer">Instagram</a></span></li>
 </ul>
+
+<section class="works">
+  <h2 class="home__powder section-title" aria-label="WORKS">
+  <span class="wiggle">W</span><span class="wiggle">O</span><span class="wiggle">R</span><span class="wiggle">K</span><span class="wiggle">S</span>
+</h2>
+
+  <ul class="works-links">
+    <li><a href="https://example.com/work-1" target="_blank" rel="noopener noreferrer">Work 01</a></li>
+    <li><a href="https://example.com/work-2" target="_blank" rel="noopener noreferrer">Work 02</a></li>
+    <li><a href="https://example.com/work-3" target="_blank" rel="noopener noreferrer">Work 03</a></li>
+  </ul>
+</section>
+  
   <footer class="site-footer">aesthethic credit to powd.jp</footer>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/simplex-noise@2.4.0/simplex-noise.min.js"></script>
