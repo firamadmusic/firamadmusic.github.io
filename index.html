@@ -43,36 +43,42 @@
   </div>
   <footer class="site-footer">© 2026</footer>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/simplex-noise@2.4.0/simplex-noise.min.js"></script>
 <script>
 // Smooth, independent floating motion for each .wiggle element.
 // Similar in spirit to Powder's original noise-based animation.
 (() => {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
   const letters = [...document.querySelectorAll('.wiggle')];
+  const noise = new SimplexNoise();
+
   const items = letters.map((el, i) => ({
     el,
-    phase: i * 1.37 + Math.random() * 2,
-    speed: 1.5 + Math.random() * 1.5,
-    drift: 1.0 + Math.random() * 1.0,
-    tilt: 0.35 + Math.random() * 0.65
+    seed: i * 17.31 + Math.random() * 100,
+    drift: 1.8,  // Movement distance in pixels
+    speed: 0.65  // Higher = faster drift
   }));
-  let lastUpdate = 0;
+
   function animate(now) {
-    // Update around 30 times per second; motion remains smooth but lightweight.
-    if (now - lastUpdate > 33) {
-      const t = now / 1000;
-      for (const item of items) {
-        const p = t * item.speed + item.phase;
-        const x = (Math.sin(p * 0.73) * 0.55 + Math.sin(p * 0.31) * 0.45) * item.drift;
-        const y = (Math.sin(p * 0.91) * 0.6 + Math.sin(p * 0.37) * 0.4) * item.drift * 1.5;
-        const r = (Math.sin(p * 0.67) * 0.65 + Math.sin(p * 0.29) * 0.35) * item.tilt;
-        const skew = Math.sin(p * 0.51) * item.tilt * 0.35;
-        item.el.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) rotate(${r.toFixed(2)}deg) skewX(${skew.toFixed(2)}deg)`;
-      }
-      lastUpdate = now;
+    const t = now / 1000;
+
+    for (const item of items) {
+      const time = t * item.speed;
+      const s = item.seed;
+
+      const x = noise.noise2D(s, time) * item.drift;
+      const y = noise.noise2D(s + 100, time) * item.drift * 1.5;
+      const r = noise.noise2D(s + 200, time) * 1.2;
+      const skew = noise.noise2D(s + 300, time) * 0.5;
+
+      item.el.style.transform =
+        `translate3d(${x}px, ${y}px, 0) rotate(${r}deg) skewX(${skew}deg)`;
     }
+
     requestAnimationFrame(animate);
   }
+
   requestAnimationFrame(animate);
 })();
 </script>
