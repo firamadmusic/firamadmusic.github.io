@@ -67,10 +67,15 @@
       const time = t * item.speed;
       const s = item.seed;
 
-      const x = noise.noise2D(s, time) * item.drift;
-      const y = noise.noise2D(s + 100, time) * item.drift * 1.5;
-      const r = noise.noise2D(s + 200, time) * 1.2;
-      const skew = noise.noise2D(s + 300, time) * 0.5;
+const jitter = 0.6;
+
+const x = noise.noise2D(s, time) * item.drift
+  + (Math.random() - 0.5) * jitter;
+const y = noise.noise2D(s + 100, time) * item.drift * 1.5
+  + (Math.random() - 0.5) * jitter;
+const r = noise.noise2D(s + 200, time) * 1.2
+  + (Math.random() - 0.5) * 0.8;
+const skew = noise.noise2D(s + 300, time) * 0.5;
 
       item.el.style.transform =
         `translate3d(${x}px, ${y}px, 0) rotate(${r}deg) skewX(${skew}deg)`;
