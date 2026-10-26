@@ -42,22 +42,36 @@
   <footer class="site-footer">© 2026 YOUR ARTIST NAME</footer>
 </main>
 <script>
-// Lightweight per-letter motion inspired by the reference's .wiggle elements.
+// Smooth, independent floating motion for each .wiggle element.
+// Similar in spirit to Powder's original noise-based animation.
 (() => {
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduced) return;
-  const letters = Array.from(document.querySelectorAll('.wiggle'));
-  let phase = 0;
-  function animate() {
-    phase += 0.018;
-    letters.forEach((el, i) => {
-      const wave = Math.sin(phase + i * 0.72);
-      const amount = (i < 18 ? 0.7 : 0.25);
-      el.style.transform = `translateY(${wave * amount}px) rotate(${wave * amount * 0.35}deg)`;
-    });
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const letters = [...document.querySelectorAll('.wiggle')];
+  const items = letters.map((el, i) => ({
+    el,
+    phase: i * 1.37 + Math.random() * 2,
+    speed: 0.45 + Math.random() * 0.45,
+    drift: 0.7 + Math.random() * 0.7,
+    tilt: 0.35 + Math.random() * 0.65
+  }));
+  let lastUpdate = 0;
+  function animate(now) {
+    // Update around 30 times per second; motion remains smooth but lightweight.
+    if (now - lastUpdate > 33) {
+      const t = now / 1000;
+      for (const item of items) {
+        const p = t * item.speed + item.phase;
+        const x = (Math.sin(p * 0.73) * 0.55 + Math.sin(p * 0.31) * 0.45) * item.drift;
+        const y = (Math.sin(p * 0.91) * 0.6 + Math.sin(p * 0.37) * 0.4) * item.drift * 1.5;
+        const r = (Math.sin(p * 0.67) * 0.65 + Math.sin(p * 0.29) * 0.35) * item.tilt;
+        const skew = Math.sin(p * 0.51) * item.tilt * 0.35;
+        item.el.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0) rotate(${r.toFixed(2)}deg) skewX(${skew.toFixed(2)}deg)`;
+      }
+      lastUpdate = now;
+    }
     requestAnimationFrame(animate);
   }
-  animate();
+  requestAnimationFrame(animate);
 })();
 </script>
 </body>
