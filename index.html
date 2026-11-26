@@ -94,7 +94,8 @@
 (() => {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const letters = [...document.querySelectorAll('.wiggle')];
+  const letters = [...document.querySelectorAll('.wiggle')]
+    .filter(el => !el.closest('.works-links'));
   const noise = new SimplexNoise();
 
   const items = letters.map((el, i) => ({
